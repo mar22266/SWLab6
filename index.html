@@ -14,7 +14,8 @@
     <div id="root"></div>
     <script type="text/babel">
       const { useState, useEffect, Suspense } = React
-
+      // Made by Andre Marroquin T
+      // Header of the blog
       const Header = () => {
         const styles = {
           backgroundColor: '#4CAF50', 
@@ -27,7 +28,7 @@
         }
         return <header style={styles}>WELCOME TO MY SOCCER BLOG</header>
       }
-
+      // Footer of the blog
       const Footer = () => {
         const styles = {
           backgroundColor: '#222',
@@ -43,11 +44,11 @@
         }
         return <footer style={styles}>Copyright 2024 AMT</footer>
       }
-
+      // Loading component
       const Loading = () => <div style={{textAlign: 'center', padding: '20px'}}>Loading...</div>
-
+      // Empty state component
       const EmptyState = () => <div style={{textAlign: 'center', padding: '20px'}}>No posts available.</div>
-
+      // Post component
       const Post = ({ title, body, featured_team, featured_player, related_match, tactics, highlighted_event, banner }) => {
         const styles = {
           padding: '20px',
@@ -58,7 +59,9 @@
           transition: 'box-shadow 0.3s ease-in-out',
           fontFamily: 'Roboto, sans-serif'
         }
+        // Convert the base64 string to an image
         const imageSrc = banner ? `data:image/jpeg;base64,${banner}` : ''
+        // Post component return
         return (
           <li style={styles} onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)'}
              onMouseOut={e => e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)'}>
@@ -73,7 +76,7 @@
           </li>
         )
       }
-
+      // Post component prop types
       Post.propTypes = {
         title: PropTypes.string.isRequired,
         body: PropTypes.string.isRequired,
@@ -84,7 +87,7 @@
         highlighted_event: PropTypes.string,
         banner: PropTypes.string
       }
-
+      // Post style
       const Posts = () => {
         const styles = {
           listStyleType: 'none',
@@ -94,7 +97,7 @@
         }
         const [posts, setPosts] = useState([])
         const [isLoading, setIsLoading] = useState(true)
-
+        // Fetch the posts from the API
         useEffect(() => {
           const getPosts = async () => {
             const apiResponse = await fetch('https://api.tiburoncin.lat/22266/posts')
@@ -108,15 +111,15 @@
           }
           getPosts()
         }, [])
-
+        // Loading state
         if (isLoading) {
           return <Loading />
         }
-
+        // Empty state
         if (posts.length === 0) {
           return <EmptyState />
         }
-
+        // Posts list
         return (
           <ul style={styles}>
             {posts.map((post, index) => 
@@ -135,7 +138,7 @@
           </ul>
         )
       }
-
+      // App component
       const App = () => {
         const styles = {
           display: 'flex',
@@ -152,7 +155,7 @@
           </main>
         )
       }
-
+      // Render the app
       const root = ReactDOM.createRoot(document.getElementById('root'))
       root.render(<App />)
     </script>
